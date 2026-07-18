@@ -4,26 +4,43 @@ import { buildPageMetadata } from '@/lib/seo'
 import { EditableSiteShell } from '@/editable/shell/EditableSiteShell'
 import { EditableLocalLoginForm } from '@/editable/components/EditableLocalAuthForms'
 import { pagesContent } from '@/editable/content/pages.content'
+import { editableDesignContract as dc } from '@/editable/layouts/design-contract'
+import { EditableReveal } from '@/editable/shell/EditableReveal'
 
 export async function generateMetadata(): Promise<Metadata> {
-  return buildPageMetadata({ path: '/login', title: 'Login', description: pagesContent.auth.login.metadataDescription })
+  return buildPageMetadata({ path: '/login', title: 'Sign in', description: pagesContent.auth.login.metadataDescription })
 }
 
 export default function LoginPage() {
   return (
     <EditableSiteShell>
-      <main className="bg-[var(--slot4-panel-bg)] text-[var(--slot4-page-text)]">
-        <section className="mx-auto grid min-h-[calc(100vh-12rem)] max-w-[var(--editable-container)] items-center gap-12 px-4 py-16 sm:px-6 lg:grid-cols-[1fr_0.9fr] lg:px-8">
-          <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[var(--slot4-accent)]">{pagesContent.auth.login.badge}</p>
-            <h1 className="mt-4 max-w-xl text-4xl font-extrabold leading-[1.05] tracking-[-0.02em] sm:text-5xl">{pagesContent.auth.login.title}</h1>
-            <p className="mt-5 max-w-lg text-base leading-7 text-[var(--slot4-muted-text)]">{pagesContent.auth.login.description}</p>
-          </div>
-          <div className="rounded-2xl border border-[var(--editable-border)] bg-[var(--slot4-surface-bg)] p-7 shadow-[0_4px_24px_rgba(0,0,0,0.08)] sm:p-9">
-            <h2 className="text-2xl font-bold tracking-[-0.01em]">{pagesContent.auth.login.formTitle}</h2>
-            <EditableLocalLoginForm />
-            <p className="mt-6 text-sm text-[var(--slot4-muted-text)]">New here? <Link href="/signup" className="font-semibold text-[var(--slot4-accent)] underline-offset-4 hover:underline">{pagesContent.auth.login.createCta}</Link></p>
-          </div>
+      <main className="min-h-screen">
+        <section className={`${dc.shell.section} grid min-h-[calc(100vh-8rem)] items-center gap-14 py-16 lg:grid-cols-[1.05fr_0.95fr] lg:py-24`}>
+          <EditableReveal index={0}>
+            <span className={dc.badge.pill}>
+              <span className="inline-block h-1.5 w-1.5 rounded-full bg-[var(--slot4-accent-soft)]" />
+              {pagesContent.auth.login.badge}
+            </span>
+            <h1 className={`${dc.type.sectionTitle} mt-6 max-w-[540px]`}>
+              {pagesContent.auth.login.title.split('.')[0]}
+              <span className="italic text-[var(--slot4-muted-text)]">.</span>
+            </h1>
+            <p className="mt-6 max-w-[480px] text-[16px] leading-[1.7] text-[var(--slot4-muted-text)]">
+              {pagesContent.auth.login.description}
+            </p>
+          </EditableReveal>
+          <EditableReveal index={1}>
+            <div className="rounded-[24px] border border-[var(--editable-border)] bg-white p-8">
+              <h2 className="editable-display text-[24px] font-semibold tracking-[-0.02em]">{pagesContent.auth.login.formTitle}</h2>
+              <EditableLocalLoginForm />
+              <p className="mt-6 text-[14px] text-[var(--slot4-muted-text)]">
+                New here?{' '}
+                <Link href="/signup" className="font-medium text-[var(--slot4-page-text)] underline underline-offset-4">
+                  {pagesContent.auth.login.createCta}
+                </Link>
+              </p>
+            </div>
+          </EditableReveal>
         </section>
       </main>
     </EditableSiteShell>
